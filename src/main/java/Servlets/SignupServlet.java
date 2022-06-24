@@ -74,15 +74,15 @@ public class SignupServlet extends HttpServlet {
 			pst.setString(1, name);
 			pst.setString(2, email);
 			pst.setString(3, password);
-
-			pst.executeUpdate();
-			if(rs>0)
-			{
-				request.getRequestDispatcher("login.html").include(request, response);
-			}else
+			if(name.isBlank() | email.isBlank() | password.isBlank())
 			{
 				request.getRequestDispatcher("index.html").include(request, response);
 			}
+			else {
+				pst.executeUpdate();
+				request.getRequestDispatcher("login.html").include(request, response);
+			}
+			
 			pst.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
